@@ -22,18 +22,11 @@ def main():
             login_error = False
             print(f"Logged in as {udemy.display_name}")
             udemy.export_cookie_to_file()
-            udemy.convertCookieFileToAnotherFormat()
-        except LoginException as e:
-            print(str(e))
-
-
-def read_cookie_from_file():
-    with open("cookies_udemy.json", "r") as f:
-        cookie = f.read()
-    return cookie
+            udemy.convert_to_j2team_cookie()
+        except LoginException as login_exception:
+            print(str(login_exception))
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     main()
-
