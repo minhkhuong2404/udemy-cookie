@@ -1,3 +1,5 @@
+import os
+
 from dotenv import load_dotenv
 from udemy import Udemy, LoginException
 
@@ -9,16 +11,16 @@ def main():
     login_error = True
     while login_error:
         try:
-            # if os.getenv("EMAIL") and os.getenv("PASSWORD"):
-            #     email, password = os.getenv("EMAIL"), os.getenv("PASSWORD")
-            # else:
-            #     email = input("Email: ")
-            #     password = input("Password: ")
-            # print("Trying to login")
-            # udemy.manual_login(email, password)
-            # udemy.get_session_info()
+            if os.getenv("EMAIL") and os.getenv("PASSWORD"):
+                email, password = os.getenv("EMAIL"), os.getenv("PASSWORD")
+            else:
+                email = input("Email: ")
+                password = input("Password: ")
+            print("Trying to login")
+            udemy.manual_login(email, password)
+            udemy.get_session_info()
             login_error = False
-            # print(f"Logged in as {udemy.display_name}")
+            print(f"Logged in as {udemy.display_name}")
             udemy.export_cookie_to_file()
             udemy.convertCookieFileToAnotherFormat()
         except LoginException as e:
