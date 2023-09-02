@@ -1,4 +1,5 @@
 import json
+import os
 import threading
 import time
 
@@ -25,6 +26,42 @@ class RaisingThread(threading.Thread):
         super().join(timeout=timeout)
         if self._exc:
             raise self._exc
+
+
+def convert_to_j2team_cookie():
+    """ Convert cookies_www_udemy.json to j2team_cookies.json"""
+    # time when the first cookie is created
+    standard_time = 1693121752
+    current_time = time.time()
+    # convert cookies_www_udemy.json to j2team_cookies.json
+    # each field in cookies_www_udemy.json is a name field in j2team_cookies.json
+    # each value of the field in cookies_www_udemy.json is a value field in j2team_cookies.json
+    # for other fields in j2team_cookies.json, use default value
+    with open('cookies_udemy.json', 'r') as file:
+        cookies_www_udemy = json.load(file)
+    with open('j2team_cookies_default.json', 'r') as file:
+        j2team_cookies = json.load(file)
+
+    print(cookies_www_udemy)
+    list_cookies = j2team_cookies['cookies']
+    print(list_cookies)
+
+    for cookie in cookies_www_udemy:
+        # find cookie in list_cookies where name = cookie
+        # update value of cookie in list_cookies
+        for _, list_cookie in enumerate(list_cookies):
+            if list_cookie['name'] == cookie:
+                list_cookie['value'] = cookies_www_udemy[cookie]
+                # add more time for expirationDate
+                try:
+                    list_cookie['expirationDate'] = list_cookie['expirationDate'] + (
+                            current_time - standard_time)
+                except KeyError as key_error:
+                    print(key_error)
+                break
+
+    with open('j2team_cookies.json', 'w') as f:
+        json.dump(j2team_cookies, f)
 
 
 class Udemy:
@@ -170,38 +207,3 @@ class Udemy:
 
         with open('cookies_udemy.json', 'w') as file:
             json.dump(requests.utils.dict_from_cookiejar(cookies_udemy), file)
-
-    def convert_to_j2team_cookie(self):
-        """ Convert cookies_www_udemy.json to j2team_cookies.json"""
-        # time when the first cookie is created
-        standard_time = 1693121752
-        current_time = time.time()
-        # convert cookies_www_udemy.json to j2team_cookies.json
-        # each field in cookies_www_udemy.json is a name field in j2team_cookies.json
-        # each value of the field in cookies_www_udemy.json is a value field in j2team_cookies.json
-        # for other fields in j2team_cookies.json, use default value
-        with open('cookies_udemy.json', 'r') as file:
-            cookies_www_udemy = json.load(file)
-        with open('j2team_cookies_default.json', 'r') as file:
-            j2team_cookies = json.load(file)
-
-        print(cookies_www_udemy)
-        list_cookies = j2team_cookies['cookies']
-        print(list_cookies)
-
-        for cookie in cookies_www_udemy:
-            # find cookie in list_cookies where name = cookie
-            # update value of cookie in list_cookies
-            for list_cookie in enumerate(list_cookies):
-                if list_cookie['name'] == cookie:
-                    list_cookie['value'] = cookies_www_udemy[cookie]
-                    # add more time for expirationDate
-                    try:
-                        list_cookie['expirationDate'] = list_cookie['expirationDate'] + (
-                                current_time - standard_time)
-                    except KeyError as key_error:
-                        print(key_error)
-                    break
-
-        with open('j2team_cookies.json', 'w') as f:
-            json.dump(j2team_cookies, f)

@@ -1,7 +1,7 @@
 import os
 
 from dotenv import load_dotenv
-from udemy import Udemy, LoginException
+from udemy import Udemy, LoginException, convert_to_j2team_cookie
 
 load_dotenv()
 
@@ -22,7 +22,7 @@ def main():
             login_error = False
             print(f"Logged in as {udemy.display_name}")
             udemy.export_cookie_to_file()
-            udemy.convert_to_j2team_cookie()
+            convert_to_j2team_cookie()
         except LoginException as login_exception:
             print(str(login_exception))
 
