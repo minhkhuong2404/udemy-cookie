@@ -24,6 +24,7 @@ def main():
             udemy.export_cookie_to_file()
             convert_to_j2team_cookie()
         except LoginException as login_exception:
+            login_error = False
             print(str(login_exception))
 
 
