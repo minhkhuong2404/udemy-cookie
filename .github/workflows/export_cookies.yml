@@ -12,13 +12,18 @@ env:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: windows-latest
     timeout-minutes: 10
     permissions:
       contents: write
     steps:
       - uses: browser-actions/setup-chrome@v1
-      - run: chrome --version
+        with:
+          chrome-version: stable
+        id: setup-chrome
+      - run: |
+          echo Installed chromium version: ${{ steps.setup-chrome.outputs.chrome-version }}
+          ${{ steps.setup-chrome.outputs.chrome-path }} --version
 
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content
