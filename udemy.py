@@ -66,6 +66,7 @@ class Udemy:
     """Udemy Class"""
 
     def __init__(self, interface: str):
+        self.display_name = None
         self.cookie_jar = None
         self.cookie_dict = None
         self.interface = interface

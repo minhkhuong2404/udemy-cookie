@@ -20,7 +20,7 @@ def main():
             udemy.manual_login(email, password)
             udemy.get_session_info()
             login_error = False
-            print(f"Logged in as {udemy.display_name}")
+            print("Logged in successfully")
             udemy.export_cookie_to_file()
             convert_to_j2team_cookie()
         except LoginException as login_exception:
