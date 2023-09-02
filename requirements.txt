@@ -1,3 +1,4 @@
 python-dotenv
 cloudscraper
 requests
+browser_cookie3
