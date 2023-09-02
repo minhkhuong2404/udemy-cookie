@@ -42,9 +42,7 @@ def convert_to_j2team_cookie():
     with open('j2team_cookies_default.json', 'r') as file:
         j2team_cookies = json.load(file)
 
-    print(cookies_www_udemy)
     list_cookies = j2team_cookies['cookies']
-    print(list_cookies)
 
     for cookie in cookies_www_udemy:
         # find cookie in list_cookies where name = cookie
@@ -132,7 +130,7 @@ class Udemy:
             data=data,
             allow_redirects=False,
         )
-        if cloud_scraper_response.text in "returnUrl":
+        if "returnUrl" in cloud_scraper_response.text:
             self.make_cookies(
                 cloud_scraper_response.cookies["client_id"], cloud_scraper_response.cookies["access_token"], csrf_token
             )
